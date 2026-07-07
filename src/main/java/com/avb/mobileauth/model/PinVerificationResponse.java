@@ -11,4 +11,8 @@ public class PinVerificationResponse {
         this.verified = verified;
         this.message = message;
     }
+
+    public boolean isVerified() {
+        return verified;
+    }
 }
