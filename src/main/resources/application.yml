@@ -1,23 +1,13 @@
 spring:
   application:
     name: mobile-auth-service
-  security:
-    jwt:
-      secret: "my-super-secret-key-that-is-definitely-not-secure"
-      expiration: 86400000
-      refresh-token-expiration: 604800000
-      key-rotation-enabled: false
 
 server:
   port: 8080
   servlet:
-    context-path: /api/v1
-  compression:
-    enabled: true
-    min-response-size: 1024
+    context-path: /auth-service
 
 logging:
   level:
     root: INFO
-    com.avb.mobileauth: DEBUG
 
