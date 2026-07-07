@@ -1,7 +1,9 @@
 package com.avb.mobileauth.downstream;
 
 import com.avb.mobileauth.model.CustomerProfile;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserProfileService {
 
     public CustomerProfile getUserProfile(String userId) {
