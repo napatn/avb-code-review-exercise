@@ -2,6 +2,7 @@ package com.avb.mobileauth.controller;
 
 import com.avb.mobileauth.dto.LoginRequest;
 import com.avb.mobileauth.dto.TokenResponse;
+import com.avb.mobileauth.dto.TokenValidationRequest;
 import com.avb.mobileauth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("OK");
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
@@ -59,10 +65,5 @@ public class AuthController {
         String cleanedToken = token.substring(bearerPrefix.length());
         String userId = authService.extractUserId(cleanedToken);
         return ResponseEntity.ok("User: " + userId);
-    }
-
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("OK");
     }
 }
