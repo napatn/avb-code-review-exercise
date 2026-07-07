@@ -6,6 +6,7 @@ import com.avb.mobileauth.model.ApiResponse;
 import com.avb.mobileauth.model.LoginData;
 import com.avb.mobileauth.model.LoginRequest;
 import com.avb.mobileauth.model.PinVerificationResponse;
+import com.avb.mobileauth.repository.UserSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,9 @@ public class LoginController {
 
     @Autowired
     private UserProfileService userProfileService;
+
+    @Autowired
+    private UserSessionRepository userSessionRepository;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginData>> login(@RequestBody LoginRequest request) {
@@ -44,7 +48,9 @@ public class LoginController {
 
             var userProfile = userProfileService.getUserProfile(userId);
 
-            LoginData loginData = new LoginData(userProfile);
+            var session = userSessionRepository.createSession(userId);
+
+            LoginData loginData = new LoginData(session.getSessionId(), userProfile);
             ApiResponse<LoginData> response = new ApiResponse<>("SUCCESS", "Login successful", loginData);
 
             return ResponseEntity.ok(response);

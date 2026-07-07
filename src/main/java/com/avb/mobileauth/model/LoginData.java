@@ -4,13 +4,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoginData {
+    private String sessionId;
     private CustomerProfile userProfile;
 
     public LoginData() {
     }
 
-    public LoginData(CustomerProfile userProfile) {
+    public LoginData(String sessionId, CustomerProfile userProfile) {
+        this.sessionId = sessionId;
         this.userProfile = userProfile;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public CustomerProfile getUserProfile() {
