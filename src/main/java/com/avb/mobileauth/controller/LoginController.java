@@ -32,12 +32,6 @@ public class LoginController {
         try {
             String userId = request.getUserId();
             String pin = request.getPin();
-            String otpCode = request.getOtpCode();
-
-            if (request.getAttemptCount() > 3) {
-                ApiResponse<LoginData> response = new ApiResponse<>("ERR_ACCOUNT_LOCKED", "Account locked due to multiple failed attempts");
-                return ResponseEntity.ok(response);
-            }
 
             PinVerificationResponse pinVerification = userPinService.verifyPin(userId, pin);
 
@@ -61,3 +55,4 @@ public class LoginController {
         }
     }
 }
+
