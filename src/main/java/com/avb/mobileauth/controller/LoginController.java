@@ -1,8 +1,10 @@
 package com.avb.mobileauth.controller;
 
-import com.avb.mobileauth.downstream.UserProfileService;
+import com.avb.mobileauth.downstream.UserKYCService;
 import com.avb.mobileauth.downstream.UserPinService;
+import com.avb.mobileauth.downstream.UserProfileService;
 import com.avb.mobileauth.model.ApiResponse;
+import com.avb.mobileauth.model.KYCResponse;
 import com.avb.mobileauth.model.LoginData;
 import com.avb.mobileauth.model.LoginRequest;
 import com.avb.mobileauth.model.PinVerificationResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,6 +23,9 @@ public class LoginController {
 
     @Autowired
     private UserPinService userPinService;
+
+    @Autowired
+    private UserKYCService userKYCService;
 
     @Autowired
     private UserProfileService userProfileService;
@@ -41,10 +47,11 @@ public class LoginController {
             }
 
             var userProfile = userProfileService.getUserProfile(userId);
+            var kycVerification = userKYCService.verifyKYC(userId);
 
             var session = userSessionRepository.createSession(userId);
 
-            LoginData loginData = new LoginData(session.getSessionId(), userProfile);
+            LoginData loginData = new LoginData(session.getSessionId(), userProfile, kycVerification.isVerified());
             ApiResponse<LoginData> response = new ApiResponse<>("SUCCESS", "Login successful", loginData);
 
             return ResponseEntity.ok(response);
@@ -55,4 +62,5 @@ public class LoginController {
         }
     }
 }
+
 

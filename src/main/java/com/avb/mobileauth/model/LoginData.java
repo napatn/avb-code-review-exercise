@@ -6,13 +6,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class LoginData {
     private String sessionId;
     private CustomerProfile userProfile;
+    private boolean kycVerified;
 
     public LoginData() {
     }
 
-    public LoginData(String sessionId, CustomerProfile userProfile) {
+    public LoginData(String sessionId, CustomerProfile userProfile, boolean kycVerified) {
         this.sessionId = sessionId;
         this.userProfile = userProfile;
+        this.kycVerified = kycVerified;
     }
 
     public String getSessionId() {
@@ -29,5 +31,13 @@ public class LoginData {
 
     public void setUserProfile(CustomerProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+    public boolean isKycVerified() {
+        return kycVerified;
+    }
+
+    public void setKycVerified(boolean kycVerified) {
+        this.kycVerified = kycVerified;
     }
 }
